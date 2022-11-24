@@ -22,7 +22,7 @@ namespace TaskManager.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManager.Repositories.Person", b =>
+            modelBuilder.Entity("TaskManager.Models.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,15 +37,15 @@ namespace TaskManager.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("Phone")
-                        .HasColumnType("integer");
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.TaskRequests", b =>
+            modelBuilder.Entity("TaskManager.Models.TaskRequests", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,9 +76,9 @@ namespace TaskManager.Migrations
                     b.ToTable("TaskRequests");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.TaskRequests", b =>
+            modelBuilder.Entity("TaskManager.Models.TaskRequests", b =>
                 {
-                    b.HasOne("TaskManager.Repositories.Person", "Person")
+                    b.HasOne("TaskManager.Models.Person", "Person")
                         .WithMany("Tasks")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -87,7 +87,7 @@ namespace TaskManager.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.Person", b =>
+            modelBuilder.Entity("TaskManager.Models.Person", b =>
                 {
                     b.Navigation("Tasks");
                 });
