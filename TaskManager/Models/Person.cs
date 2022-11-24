@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TaskManager.Repositories
+namespace TaskManager.Models
 {
     [Table("Person")]
     public class Person

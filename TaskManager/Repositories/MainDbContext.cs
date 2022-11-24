@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TaskManager.Models;
 
 namespace TaskManager.Repositories
 {
@@ -14,9 +15,9 @@ namespace TaskManager.Repositories
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to postgres with connection string from app settings
-            options.UseNpgsql(Configuration.GetConnectionString("TaskManager_Db"));
+            options.UseNpgsql(Configuration.GetConnectionString("TaskManagerDbConnection"));
         }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<TaskRequests> Tasks { get; set; }
+        public DbSet<Person> Persons { get; set; } = null!;
+        public DbSet<TaskRequests> Tasks { get; set; } = null!;
     }
 }
