@@ -6,7 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.DTO;
+using TaskManager.DTO.PersonDto;
 using TaskManager.Models;
 using TaskManager.Repositories;
 
@@ -54,7 +54,7 @@ namespace TaskManager.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPerson(int id, UpdatePersonDto personDto)
         {
-            if (id != personDto.Id)
+            if (id != personDto.PersonId)
             {
                 return BadRequest();
             }
@@ -97,7 +97,7 @@ namespace TaskManager.Controllers
             await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetPerson), new { id = person.Id }, person);
+            return CreatedAtAction(nameof(GetPerson), new { id = person.PersonId }, person);
         }
 
         // DELETE: api/Persons/5
@@ -118,7 +118,7 @@ namespace TaskManager.Controllers
 
         private async Task<bool> PersonExists(int id)
         {
-            return await _context.Persons.AnyAsync(e => e.Id == id);
+            return await _context.Persons.AnyAsync(e => e.PersonId == id);
         }
     }
 }

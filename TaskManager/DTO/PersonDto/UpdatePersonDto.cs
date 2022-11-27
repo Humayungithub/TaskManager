@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.DTO
+namespace TaskManager.DTO.PersonDto
 {
-    public class UpdatePersonDto : BaseDto
+    public class UpdatePersonDto : BaseDtoPerson
     {
+        public int PersonId { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }

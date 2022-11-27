@@ -12,8 +12,8 @@ using TaskManager.Repositories;
 namespace TaskManager.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20221124100220_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20221127134204_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,72 +25,75 @@ namespace TaskManager.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManager.Repositories.Person", b =>
+            modelBuilder.Entity("TaskManager.Models.Person", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PersonId"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("Phone")
-                        .HasColumnType("integer");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("PersonId");
 
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.TaskRequests", b =>
+            modelBuilder.Entity("TaskManager.Models.TaskRequests", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TaskId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TaskId"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DueTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("ItemsDescription")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Label")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("TaskId");
 
                     b.HasIndex("PersonId");
 
                     b.ToTable("TaskRequests");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.TaskRequests", b =>
+            modelBuilder.Entity("TaskManager.Models.TaskRequests", b =>
                 {
-                    b.HasOne("TaskManager.Repositories.Person", "Person")
+                    b.HasOne("TaskManager.Models.Person", "TaskFor")
                         .WithMany("Tasks")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Person");
+                    b.Navigation("TaskFor");
                 });
 
-            modelBuilder.Entity("TaskManager.Repositories.Person", b =>
+            modelBuilder.Entity("TaskManager.Models.Person", b =>
                 {
                     b.Navigation("Tasks");
                 });
